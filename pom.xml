@@ -1,0 +1,118 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>SampleProjects</groupId>
+  <artifactId>TaintSampleMVN</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>TaintSampleMVN</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.checkerframework</groupId>
+        <artifactId>checker</artifactId>
+        <version>3.21.4</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.checkerframework/checker-qual -->
+    <dependency>
+        <groupId>org.checkerframework</groupId>
+        <artifactId>checker-qual</artifactId>
+        <version>3.21.4</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.google.errorprone</groupId>
+        <artifactId>javac</artifactId>
+        <!-- <version>9+181-r4173-1</version> -->
+    </dependency>
+  </dependencies>
+  <profiles>
+    <profile>
+        <id>checkerframework</id>
+        <activation>
+            <jdk>[1.8,)</jdk>
+        </activation>
+        <build>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <fork>true</fork> <!-- Must fork or else JVM arguments are ignored. -->
+                        <compilerArguments>
+                            <Xmaxerrs>10000</Xmaxerrs>
+                            <Xmaxwarns>10000</Xmaxwarns>
+                        </compilerArguments>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.checkerframework</groupId>
+                                <artifactId>checker</artifactId>
+                                <version>3.22.1</version>
+                            </path>
+                        </annotationProcessorPaths>
+                        <annotationProcessors>
+                            <!-- Add all the checkers you want to enable here -->
+                            <!-- <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor> -->
+                            <annotationProcessor>org.checkerframework.checker.tainting.TaintingChecker</annotationProcessor>
+                        </annotationProcessors>
+                        <compilerArgs>
+                            <arg>-Awarns</arg>
+                            <!-- <arg>-Astubs=checkerframework/stubs</arg> -->
+                            <arg>-Astubs=${project.basedir}/stubs</arg>
+                            <!-- <arg>-AstubWarnIfNotFound</arg> -->
+                            <!-- -Awarns turns type-checking errors into warnings. -->
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+        <dependencies>
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>checker</artifactId>
+                <version>3.22.1</version>
+            </dependency>
+        </dependencies>
+    </profile>
+
+    <profile>
+        <id>checkerframework-jdk8</id>
+        <activation>
+            <jdk>1.8</jdk>
+        </activation>
+        <!-- using github.com/google/error-prone-javac is required when running on JDK 8 -->
+        <properties>
+            <javac.version>9+181-r4173-1</javac.version>
+        </properties>
+        <dependencies>
+            <dependency>
+                <groupId>com.google.errorprone</groupId>
+                <artifactId>javac</artifactId>
+                <version>9+181-r4173-1</version>
+            </dependency>
+        </dependencies>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <fork>true</fork>
+                        <compilerArgs combine.children="append">
+                            <arg>-J-Xbootclasspath/p:${settings.localRepository}/com/google/errorprone/javac/${javac.version}/javac-${javac.version}.jar</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+    
+  </profiles>
+</project>
