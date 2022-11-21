@@ -4,9 +4,9 @@
 package tainting;
 
 import org.checkerframework.checker.optional.qual.Present;
-import org.checkerframework.checker.tainting.qual.PolyTainted;
-import org.checkerframework.checker.tainting.qual.Tainted;
-import org.checkerframework.checker.tainting.qual.Untainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RPolyTainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RTainted;
+import edu.ucr.cs.riple.taint.ucrtainting.qual.RUntainted;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,17 +19,17 @@ public class TaintExample {
     return true;
   }
 
-  void execute(@Untainted String s) {}
+  void execute(@RUntainted String s) {}
 
 //  void stringRef(@Untainted String ref) {
 //    execute(ref.substring(3, 5)); // error
 //  }
 
-  void makeExternalCall(@Tainted String s) {
+  void makeExternalCall(@RTainted String s) {
     TaintStubSample.printUntaintedString(s);
   }
 
-  void testRCE(@Tainted String s) throws IOException {
+  void testRCE(@RTainted String s) throws IOException {
     Runtime.getRuntime().exec(s);
 //    ProcessBuilder p = new ProcessBuilder(s);
 //    p = new ProcessBuilder(Arrays.asList(s));
