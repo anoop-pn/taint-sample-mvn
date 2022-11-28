@@ -58,4 +58,22 @@ public class TaintExample {
 //      opt.get();
 //    }
 //  }
+
+
+  void test1(@RTainted String s1, @RTainted String s2) {
+    @RUntainted String result=TaintStubSample.compute(s1,s2);
+  }
+
+  void test2(@RTainted String s1, @RUntainted String s2) {
+    @RUntainted String result=TaintStubSample.compute(s1,s2);
+  }
+
+  void test3(@RUntainted String s1, @RTainted String s2) {
+    @RUntainted String result=TaintStubSample.compute(s1,s2);
+  }
+
+  void test4(@RUntainted String s1, @RUntainted String s2) {
+    @RUntainted String result=TaintStubSample.compute(s1,s2);
+  }
+
 }
