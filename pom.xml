@@ -59,7 +59,7 @@
           </annotationProcessors>
           <compilerArgs>
               <arg>-Awarns</arg>
-              <arg>-AannotatedPackages=com.bar</arg>
+              <arg>-AannotatedPackages=com.test</arg>
           </compilerArgs>
         </configuration>
       </plugin>
