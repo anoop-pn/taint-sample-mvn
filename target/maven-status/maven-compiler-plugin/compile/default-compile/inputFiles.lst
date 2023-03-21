@@ -1,3 +1,6 @@
-/home/nano/TaintChecker/taint-sample-mvn/src/main/java/tainting/App.java
-/home/nano/TaintChecker/taint-sample-mvn/src/main/java/tainting/TaintStubSample.java
-/home/nano/TaintChecker/taint-sample-mvn/src/main/java/tainting/TaintExample.java
+/home/anooppn/TaintChecker/taint-sample-mvn/src/main/java/annotated/AnnotatedClass.java
+/home/anooppn/TaintChecker/taint-sample-mvn/src/main/java/tainting/App.java
+/home/anooppn/TaintChecker/taint-sample-mvn/src/main/java/tainting/Testclass.java
+/home/anooppn/TaintChecker/taint-sample-mvn/src/main/java/tainting/TaintExample.java
+/home/anooppn/TaintChecker/taint-sample-mvn/src/main/java/tainting/TestClass.java
+/home/anooppn/TaintChecker/taint-sample-mvn/src/main/java/tainting/TaintStubSample.java
